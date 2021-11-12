@@ -112,7 +112,7 @@ TextureImporter:
     second: Button_Settings
   - first:
       213: 21300072
-    second: SkardFlatAtlas_13
+    second: Button_Home
   - first:
       213: 21300074
     second: Button_Pause
@@ -472,7 +472,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SkardFlatAtlas_13
+      name: Button_Home
       rect:
         serializedVersion: 2
         x: 321

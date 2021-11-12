@@ -10,6 +10,9 @@ TagManager:
   - Held
   - Landed
   - Block
+  - Model
+  - Ctrl
+  - View
   layers:
   - Default
   - TransparentFX
