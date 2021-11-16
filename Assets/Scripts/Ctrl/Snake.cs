@@ -10,7 +10,6 @@ public class Snake: MonoBehaviour
 	private float _timer = 0;
 	private float _stepTime = 0.5f;
 	private Direction _direction = Direction.RIGHT;
-	private GameManager _gameManager;
 	private enum Direction
 	{
 		UP,
@@ -33,7 +32,6 @@ public class Snake: MonoBehaviour
 		if(_timer>_stepTime)
 		{
 			_timer = 0;
-			//ff:执行蛇移动操作
 			Move();
 		}
 		InputControl();
@@ -58,82 +56,60 @@ public class Snake: MonoBehaviour
 			_direction = Direction.RIGHT;
 		}
 	}
-	private void Spawn(Vector3 position)
+	private void Spawn(Vector3 dir)
 	{
 		GameObject g = Instantiate(SnakeBody, _ctrl.gameManager.BlockHolder);
-		g.transform.position = position;
+		g.transform.position = dir;
 		Body.Add(g);
 		Debug.Log("Spawn !");
 	}
 
-	public void AddBody(Vector3 pos, int bodyNum = 1)
+	public void AddBody(Vector3 dir, int bodyNum = 1)
 	{
 		for (int i = 0; i < bodyNum; i++)
 		{
-			Spawn(pos);
+			Spawn(dir);
 		}
 	}
 	private void Move()
 	{
-		if(_direction == Direction.UP)
+		if (_direction == Direction.UP)
 		{
-			Body[0].transform.position += Vector3.up;
-			if (!_ctrl.model.IsValidMapPosition(Body[0].transform))
-			{
-				Body[0].transform.position -= Vector3.up;
-				_isPause = true;
-			}
-			else
-			{
-				MoveBody();
-			}
+			CheckMove(Vector3.up);
 		}
 		else if(_direction == Direction.DOWN)
 		{
-			Body[0].transform.position += Vector3.down;
-			if (!_ctrl.model.IsValidMapPosition(Body[0].transform))
-			{
-				Body[0].transform.position += Vector3.down;
-				_isPause = true;
-			}
-			else
-			{
-				MoveBody();
-			}
+			CheckMove(Vector3.down);
 		}
 		else if (_direction == Direction.LEFT)
 		{
-			Body[0].transform.position += Vector3.left;
-			if (!_ctrl.model.IsValidMapPosition(Body[0].transform))
-			{
-				Body[0].transform.position -= Vector3.left;
-				_isPause = true;
-			}
-			else
-			{
-				MoveBody();
-			}
+			CheckMove(Vector3.left);
 		}
 		else if (_direction == Direction.RIGHT)
 		{
-			Body[0].transform.position += Vector3.right;
-			if (!_ctrl.model.IsValidMapPosition(Body[0].transform))
-			{
-				Body[0].transform.position -= Vector3.right;
-				_isPause = true;
-			}
-			else
-			{
-				MoveBody();
-			}
+			CheckMove(Vector3.right);
 		}
-		
 	}
-	private void MoveBody()
+
+	private void CheckMove(Vector3 dir)
 	{
-		for (int i = Body.Count-1; i > 0 ; i--)
+		if (!_ctrl.model.IsValidMapPosition(Body[0].transform.position + dir))
 		{
-			Body[i] = Body[i-1];
+			_isPause = true;
 		}
+		else
+		{
+			_ctrl.gameManager.CheckFoodPosition(Body[0].transform.position + dir);
+			MoveBody(dir);
+		}
+	}
+
+	private void MoveBody(Vector3 dir)
+	{
+		for (int i = Body.Count - 1; i > 0; i--)
+		{
+			Body[i].transform.position = Body[i - 1].transform.position;
+		}
+		Body[0].transform.position += dir;
 	}
 }

@@ -11,18 +11,19 @@ public class Model : MonoBehaviour
     [HideInInspector]
     public Transform[,] _map = new Transform[MAX_COLUMNS, MAX_ROWS];
 
-    public bool IsValidMapPosition(Transform t)
+    public bool IsValidMapPosition(Vector3 dir)
 	{
-        if (!IsInsideMap(t)) 
+        if (!IsInsideMap(dir)) 
             return false;
-        Vector2 pos = t.position;
-        if (_map[(int)pos.x, (int)pos.y] != null)
+        
+        if (_map[(int)dir.x, (int)dir.y] != null)
             return false;
         else
             return true;
 	}
-    private bool IsInsideMap(Transform t)
+    private bool IsInsideMap(Vector3 dir)
 	{
-        return t.position.x >= 0 && t.position.x < MAX_COLUMNS && t.position.y >= 0 && t.position.y < MAX_ROWS;
+        return dir.x >= 0 && dir.x < MAX_COLUMNS && dir.y >= 0 && dir.y < MAX_ROWS;
     }
+
 }

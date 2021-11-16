@@ -51,10 +51,20 @@ public class GameManager:MonoBehaviour
 		}
 	}
 
-	private void EatFood()
+	public void EatFood(Vector3 dir)
 	{
-		snake.AddBody(_currentFood.transform.position, _currentFood.AddBodyNum);
+		snake.AddBody(dir, _currentFood.AddBodyNum);
 		//ff:增加分数
+		Destroy(_currentFood.gameObject);
+		_currentFood = null;
+	}
+
+	public void CheckFoodPosition(Vector3 dir)
+	{
+		if(_currentFood.transform.position == dir)
+		{
+			EatFood(dir);
+		}
 	}
 }
 
