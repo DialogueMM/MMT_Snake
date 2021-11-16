@@ -79,13 +79,13 @@ TextureImporter:
     second: Background_2
   - first:
       213: 21300050
-    second: SkardFlatAtlas_2
+    second: AudioPlay
   - first:
       213: 21300052
     second: SkardFlatAtlas_3
   - first:
       213: 21300054
-    second: SkardFlatAtlas_4
+    second: Button_Mute
   - first:
       213: 21300056
     second: SkardFlatAtlas_5
@@ -304,7 +304,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SkardFlatAtlas_2
+      name: AudioPlay
       rect:
         serializedVersion: 2
         x: 327
@@ -325,7 +325,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SkardFlatAtlas_4
+      name: Button_Mute
       rect:
         serializedVersion: 2
         x: 445

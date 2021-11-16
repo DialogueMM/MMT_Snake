@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class View : MonoBehaviour
 {
@@ -9,8 +10,13 @@ public class View : MonoBehaviour
 	public RectTransform MenuUI;
 	public RectTransform GameUI;
 
+	public Text StartButtonText;
+
 	public GameObject GameOverUI;
-   
+	public GameObject RankUI;
+	public GameObject SettingUI;
+	public GameObject MuteObj;
+	public GameObject RestartButton;
 
     public void ShowMenuUI()
 	{
@@ -43,5 +49,38 @@ public class View : MonoBehaviour
 		{
 			GameUI.gameObject.SetActive(false);
 		});
+	}
+
+	public void ShowRankUI()
+	{
+		RankUI.SetActive(true);
+		//ff:增加数据
+	}
+
+	public void OnRankUIClick()
+	{
+		RankUI.SetActive(false);
+	}
+
+	public void ShowSettingUI()
+	{
+		SettingUI.SetActive(true);
+	}
+	public void OnSettingUIClick()
+	{
+		SettingUI.SetActive(false);
+	}
+	public void SetMuteActive(bool isActive)
+	{
+		MuteObj.SetActive(isActive);
+	}
+	public void SetStartToContinue()
+	{
+		StartButtonText.text = "Continue";
+	}
+
+	public void ShowRestartButton()
+	{
+		RestartButton.SetActive(true);
 	}
 }

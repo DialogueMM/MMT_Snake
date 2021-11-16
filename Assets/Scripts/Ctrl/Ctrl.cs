@@ -8,6 +8,8 @@ public class Ctrl : MonoBehaviour
     public View view;
     [HideInInspector]
     public CameraManager cameraManager;
+    [HideInInspector]
+    public GameManager gameManager;
 
     private FSMSystem _fsm;
     private void Awake()
@@ -15,6 +17,7 @@ public class Ctrl : MonoBehaviour
         model = GameObject.FindGameObjectWithTag("Model").GetComponent<Model>();
         view = GameObject.FindGameObjectWithTag("View").GetComponent<View>();
         cameraManager = GetComponent<CameraManager>();
+        gameManager = GetComponent<GameManager>();
     }
     void Start()
 	{

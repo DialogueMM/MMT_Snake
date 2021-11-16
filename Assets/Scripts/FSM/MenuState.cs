@@ -23,4 +23,24 @@ public class MenuState : FSMState
 	{
 		fsm.PerformTransition(Transition.StartButtonClick);
 	}
+
+	public void OnRankButtonClick()
+	{
+		ctrl.view.ShowRankUI();
+	}
+	public void OnSettingButtonClick()
+	{
+		ctrl.view.ShowSettingUI();
+	}
+
+	public void OnRestartButtonClick()
+	{
+		//ff:Çå³ýÊý¾Ý
+		fsm.PerformTransition(Transition.StartButtonClick);
+		ctrl.gameManager.StartGame();
+	}
+	public void OnQuitButtonClick()
+	{
+		Application.Quit();
+	}
 }

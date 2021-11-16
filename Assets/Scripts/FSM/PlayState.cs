@@ -14,11 +14,13 @@ public class PlayState : FSMState
 	{
 		ctrl.view.ShowGameUI();
 		ctrl.cameraManager.ZoomIn();
-
+		ctrl.gameManager.StartGame();
 	}
 	public override void DoBeforeLeaving()
 	{
 		ctrl.view.HideGameUI();
+		ctrl.view.SetStartToContinue();
+		ctrl.view.ShowRestartButton();
 	}
 	public void OnPauseBtnClick()
 	{
