@@ -6,7 +6,7 @@ public class Snake: MonoBehaviour
 	public List<GameObject> Body = new List<GameObject>();
 	public GameObject SnakeBody;
 	Ctrl _ctrl;
-	private bool _isPause = false;
+	private bool _isPause = true;
 	private float _timer = 0;
 	private float _stepTime = 0.5f;
 	private Direction _direction = Direction.RIGHT;
@@ -89,7 +89,7 @@ public class Snake: MonoBehaviour
 		Vector3 newPos = Body[0].transform.position + dir;
 		if (!_ctrl.model.IsValidMapPosition(newPos,Body))
 		{
-			_isPause = true;
+			PauseGame();
 		}
 		else
 		{
@@ -105,5 +105,25 @@ public class Snake: MonoBehaviour
 			Body[i].transform.position = Body[i - 1].transform.position;
 		}
 		Body[0].transform.position += pos;
+	}
+	public void Restart()
+	{
+		GameObject head = Body[0];
+		for (int i = 1; i < Body.Count; i++)
+		{
+			Destroy(Body[i].gameObject);
+		}
+		Body.Clear();
+		head.transform.position = new Vector3(13, 13);
+		_direction = Direction.RIGHT;
+		Body.Add(head);
+	}
+	public void PauseGame()
+	{
+		_isPause = true;
+	}
+	public void Resume()
+	{
+		_isPause = false;
 	}
 }

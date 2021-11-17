@@ -21,6 +21,7 @@ public class PlayState : FSMState
 		ctrl.view.HideGameUI();
 		ctrl.view.SetStartToContinue();
 		ctrl.view.ShowRestartButton();
+		ctrl.gameManager.PauseGame();
 	}
 	public void OnPauseBtnClick()
 	{

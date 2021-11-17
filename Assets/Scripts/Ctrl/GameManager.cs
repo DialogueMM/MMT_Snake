@@ -17,6 +17,11 @@ public class GameManager:MonoBehaviour
 	{
 		if (_isPause)
 			return;
+		if (ctrl.model.IsGameOver)
+		{
+			PauseGame();
+			ctrl.view.ShowGameOverUI(ctrl.model.Score);
+		}
 		if (_currentFood == null)
 		{
 			SpawnFood();
@@ -27,14 +32,29 @@ public class GameManager:MonoBehaviour
 	public void StartGame()
 	{
 		_isPause = false;
+		snake.Resume();
+	}
+
+	public void Restart()
+	{
+		if(_currentFood!=null)
+		{
+			Destroy(_currentFood.gameObject);
+			_currentFood = null;
+		}
+		snake.Restart();
+		StartGame();
+	}
+
+	public void PauseGame()
+	{
+		_isPause = true;
+		snake.PauseGame();
 	}
 
 	public void SpawnFood()
 	{
 		int index = Random.Range(0, Foods.Length);
-		//ff:生成的坐标不应该在蛇身上
-		
-
 		_currentFood = Instantiate(Foods[index], BlockHolder);
 		int colume, row;
 		RandomPosition(out colume, out row);

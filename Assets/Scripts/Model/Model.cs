@@ -23,17 +23,26 @@ public class Model : MonoBehaviour
         get { return _highScore; }
     }
 
-    private bool _isDataChanged = false;
-    public bool IsDataChanged
+    private bool _isGameOver = false;
+    public bool IsGameOver
 	{
-        get { return _isDataChanged;}
+        get { return _isGameOver; }
 	}
-    public bool IsValidMapPosition(Vector3 pos,List<GameObject> body)
+
+	private void Awake()
 	{
-        if (!IsInsideMap(pos)) 
+        LoadData();
+	}
+
+	public bool IsValidMapPosition(Vector3 pos,List<GameObject> body)
+	{
+        if (!IsInsideMap(pos) || IsSnakeBody(body, pos))
+        {
+            _isGameOver = true;
+            SaveData();
             return false;
-		if (IsSnakeBody(body, pos))
-			return false;
+        }
+		
         return true;
 	}
 
@@ -64,4 +73,16 @@ public class Model : MonoBehaviour
 	{
         _highScore = PlayerPrefs.GetInt("HighScore", 0);
 	}
+
+    public void SaveData()
+	{
+        PlayerPrefs.SetInt("HighScore", _highScore);
+	}
+
+    public void Restart()
+	{
+        _score = 0;
+        _isGameOver = false;
+        LoadData();
+    }
 }

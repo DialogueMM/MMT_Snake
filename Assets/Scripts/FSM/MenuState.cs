@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuState : FSMState
@@ -35,9 +33,9 @@ public class MenuState : FSMState
 
 	public void OnRestartButtonClick()
 	{
-		//ff:Çå³ýÊý¾Ý
+		ctrl.model.Restart();
+		ctrl.gameManager.Restart();
 		fsm.PerformTransition(Transition.StartButtonClick);
-		ctrl.gameManager.StartGame();
 	}
 	public void OnQuitButtonClick()
 	{

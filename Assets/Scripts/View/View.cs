@@ -21,7 +21,16 @@ public class View : MonoBehaviour
 	public Text Score;
 	public Text HighScore;
 
-    public void ShowMenuUI()
+	public Text GameOverScore;
+
+	private Ctrl _ctrl;
+
+	private void Awake()
+	{
+		_ctrl = GameObject.FindGameObjectWithTag("Ctrl").GetComponent<Ctrl>();
+	}
+
+	public void ShowMenuUI()
 	{
 		MenuUI.gameObject.SetActive(true);
 		MenuUI.DOAnchorPosX(340f, 0.8f);
@@ -71,6 +80,14 @@ public class View : MonoBehaviour
 		RankUI.SetActive(false);
 	}
 
+	public void OnGameOverRestartBtnClick()
+	{
+		HideGameOverUI();
+		_ctrl.model.Restart();
+		_ctrl.gameManager.Restart();
+		UpdateGameUI(_ctrl.model.Score, _ctrl.model.HighScore);
+	}
+
 	public void ShowSettingUI()
 	{
 		SettingUI.SetActive(true);
@@ -91,5 +108,16 @@ public class View : MonoBehaviour
 	public void ShowRestartButton()
 	{
 		RestartButton.SetActive(true);
+	}
+
+	public void ShowGameOverUI(int score)
+	{
+		GameOverUI.SetActive(true);
+		GameOverScore.text = score.ToString();
+	}
+
+	public void HideGameOverUI()
+	{
+		GameOverUI.SetActive(false);
 	}
 }
