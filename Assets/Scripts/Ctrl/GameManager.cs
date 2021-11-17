@@ -38,32 +38,43 @@ public class GameManager:MonoBehaviour
 		_currentFood = Instantiate(Foods[index], BlockHolder);
 		int colume, row;
 		RandomPosition(out colume, out row);
-		_currentFood.transform.position = new Vector3 (colume, row);
+		_currentFood.transform.position = new Vector3(colume, row);
 	}
 
 	private void RandomPosition(out int colume ,out int row)
 	{
 		colume = Random.Range(0, Model.MAX_COLUMNS);
 		row = Random.Range(0, Model.MAX_ROWS);
-		if(ctrl.model._map[colume,row]!=null)
+		if(IsInsideSnakeBody(new Vector3(colume,row)))
 		{
 			RandomPosition(out colume,out row);
 		}
 	}
 
-	public void EatFood(Vector3 dir)
+	private bool IsInsideSnakeBody(Vector3 pos)
 	{
-		snake.AddBody(dir, _currentFood.AddBodyNum);
-		//ff:增加分数
+		foreach (GameObject obj in snake.Body)
+		{
+			if (obj.transform.position == pos)
+				return true;
+		}
+		return false;
+	}
+
+	public void EatFood(Vector3 pos)
+	{
+		snake.AddBody(pos);
+		ctrl.model.UpdateScore(_currentFood.Score);
+		ctrl.view.UpdateGameUI(ctrl.model.Score, ctrl.model.HighScore);
 		Destroy(_currentFood.gameObject);
 		_currentFood = null;
 	}
 
-	public void CheckFoodPosition(Vector3 dir)
+	public void CheckFoodPosition(Vector3 pos)
 	{
-		if(_currentFood.transform.position == dir)
+		if(_currentFood.transform.position == pos)
 		{
-			EatFood(dir);
+			EatFood(pos);
 		}
 	}
 }

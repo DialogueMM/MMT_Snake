@@ -20,8 +20,8 @@ public class Snake: MonoBehaviour
 
 	private void Awake()
 	{
-		Body.Add(gameObject);
 		_ctrl = GameObject.FindGameObjectWithTag("Ctrl").GetComponent<Ctrl>();
+		Body.Add(gameObject);
 	}
 
 	private void Update()
@@ -56,21 +56,14 @@ public class Snake: MonoBehaviour
 			_direction = Direction.RIGHT;
 		}
 	}
-	private void Spawn(Vector3 dir)
+	public void AddBody(Vector3 pos)
 	{
 		GameObject g = Instantiate(SnakeBody, _ctrl.gameManager.BlockHolder);
-		g.transform.position = dir;
+		g.transform.position = pos;
 		Body.Add(g);
 		Debug.Log("Spawn !");
 	}
 
-	public void AddBody(Vector3 dir, int bodyNum = 1)
-	{
-		for (int i = 0; i < bodyNum; i++)
-		{
-			Spawn(dir);
-		}
-	}
 	private void Move()
 	{
 		if (_direction == Direction.UP)
@@ -93,23 +86,24 @@ public class Snake: MonoBehaviour
 
 	private void CheckMove(Vector3 dir)
 	{
-		if (!_ctrl.model.IsValidMapPosition(Body[0].transform.position + dir))
+		Vector3 newPos = Body[0].transform.position + dir;
+		if (!_ctrl.model.IsValidMapPosition(newPos,Body))
 		{
 			_isPause = true;
 		}
 		else
 		{
-			_ctrl.gameManager.CheckFoodPosition(Body[0].transform.position + dir);
+			_ctrl.gameManager.CheckFoodPosition(newPos);
 			MoveBody(dir);
 		}
 	}
 
-	private void MoveBody(Vector3 dir)
+	private void MoveBody(Vector3 pos)
 	{
 		for (int i = Body.Count - 1; i > 0; i--)
 		{
 			Body[i].transform.position = Body[i - 1].transform.position;
 		}
-		Body[0].transform.position += dir;
+		Body[0].transform.position += pos;
 	}
 }

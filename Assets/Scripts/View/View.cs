@@ -18,6 +18,9 @@ public class View : MonoBehaviour
 	public GameObject MuteObj;
 	public GameObject RestartButton;
 
+	public Text Score;
+	public Text HighScore;
+
     public void ShowMenuUI()
 	{
 		MenuUI.gameObject.SetActive(true);
@@ -38,10 +41,16 @@ public class View : MonoBehaviour
 		});
 	}
 
-	public void ShowGameUI()
+	public void ShowGameUI(int score = 0, int highScore = 0)
 	{
+		UpdateGameUI(score, highScore);
 		GameUI.gameObject.SetActive(true);
 		GameUI.DOAnchorPosX(275f, 0.8f);
+	}
+	public void UpdateGameUI(int score = 0,int highScore = 0)
+	{
+		Score.text = score.ToString();
+		HighScore.text = highScore.ToString();
 	}
 	public void HideGameUI()
 	{
